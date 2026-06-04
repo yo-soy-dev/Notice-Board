@@ -1,40 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Reno Notice Board
 
-## Getting Started
+A full-stack Notice Board built with Next.js (Pages Router), Prisma, and TiDB Cloud (MySQL), deployed on Vercel.
 
-First, run the development server:
+## Live Demo
 
-```bash
+[YOUR_VERCEL_URL_HERE]
+
+## Features
+
+- Create, Read, Update, Delete notices
+- Server-side validation on all API routes
+- Urgent notices appear first (Prisma orderBy, not browser sorting)
+- Red Urgent badge on urgent notices
+- Confirmation dialog before deleting
+- Responsive card grid (mobile + desktop)
+- Optional image URL support (bonus)
+
+## Tech Stack
+
+- Framework: Next.js 14, Pages Router
+- ORM: Prisma
+- Database: TiDB Cloud (MySQL, free tier)
+- Hosting: Vercel (Hobby tier)
+- Styling: Tailwind CSS
+
+## How to Run Locally
+
+### Prerequisites
+- Node.js 18+
+- Free TiDB Cloud account (tidbcloud.com)
+
+### Steps
+
+git clone https://github.com/YOUR_USERNAME/reno-noticeboard.git
+cd reno-noticeboard
+npm install
+cp .env.example .env.local
+
+Add your DATABASE_URL in .env.local:
+DATABASE_URL="mysql://username:password@host:4000/noticeboard?sslaccept=strict"
+
+npx prisma db push
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## API Routes
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- GET    /api/notices         - List all notices (Urgent first)
+- POST   /api/notices         - Create a notice
+- GET    /api/notices/[id]    - Get single notice
+- PUT    /api/notices/[id]    - Update a notice
+- DELETE /api/notices/[id]    - Delete a notice
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## One Thing I Would Improve With More Time
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Add real image upload support using Vercel Blob or Cloudinary. Currently only image URLs are supported. With more time I would let users upload images directly from their device.
 
-## Learn More
+## AI Usage
 
-To learn more about Next.js, take a look at the following resources:
+Claude (Anthropic) was used to scaffold this project including:
+- Prisma schema design
+- All API routes with server-side validation
+- React components (NoticeCard, NoticeForm, Layout)
+- Page files (index, new, edit)
+- Tailwind CSS styling
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+I reviewed every file, verified against assignment requirements (correct HTTP methods, Prisma-level orderBy, Pages Router not App Router, delete confirmation), and made changes where needed.
