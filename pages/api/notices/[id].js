@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "PUT") {
-    const { title, body, category, priority, publishDate, imageUrl } = req.body;
+    const { title, body, category, priority, publishDate, imageUrl, location } = req.body;
 
     // Server-side validation
     const errors = {};
@@ -78,6 +78,7 @@ export default async function handler(req, res) {
           priority,
           publishDate: new Date(publishDate),
           imageUrl: imageUrl && imageUrl.trim() !== "" ? imageUrl.trim() : null,
+          location: location && location.trim() !== "" ? location.trim() : null,
         },
       });
       return res.status(200).json(updated);

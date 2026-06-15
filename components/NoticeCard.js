@@ -36,9 +36,8 @@ export default function NoticeCard({ notice, onDeleted }) {
   return (
     <>
       <div
-        className={`relative bg-white rounded-2xl shadow-sm border ${
-          notice.priority === "Urgent" ? "border-red-300 ring-1 ring-red-200" : "border-slate-200"
-        } overflow-hidden flex flex-col transition-shadow hover:shadow-md`}
+        className={`relative bg-white rounded-2xl shadow-sm border ${notice.priority === "Urgent" ? "border-red-300 ring-1 ring-red-200" : "border-slate-200"
+          } overflow-hidden flex flex-col transition-shadow hover:shadow-md`}
       >
         {/* Urgent stripe */}
         {notice.priority === "Urgent" && (
@@ -55,6 +54,12 @@ export default function NoticeCard({ notice, onDeleted }) {
               onError={(e) => { e.target.style.display = "none"; }}
             />
           </div>
+        )}
+
+        {notice.location && (
+          <p className="text-xs text-slate-400 mt-1">
+            📍 {notice.location}
+          </p>
         )}
 
         <div className="p-5 flex flex-col flex-1">

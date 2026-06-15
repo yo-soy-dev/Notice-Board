@@ -8,14 +8,16 @@ const EMPTY_FORM = {
   priority: "Normal",
   publishDate: "",
   imageUrl: "",
+  location: "",
 };
 
-const CATEGORIES = ["General", "Exam", "Event"];
+const CATEGORIES = ["General", "Exam", "Event", "Holiday"];
 
 const CATEGORY_STYLES = {
   General: { active: "bg-slate-700 text-white border-slate-700", inactive: "bg-white text-slate-600 border-slate-200 hover:border-slate-400" },
   Exam: { active: "bg-blue-600 text-white border-blue-600", inactive: "bg-white text-blue-600 border-blue-200 hover:border-blue-400" },
   Event: { active: "bg-emerald-600 text-white border-emerald-600", inactive: "bg-white text-emerald-600 border-emerald-200 hover:border-emerald-400" },
+  Holiday: { active: "bg-orange-500 text-white border-orange-500", inactive: "bg-white text-orange-500 border-orange-200 hover:border-orange-400" },
 };
 
 export default function NoticeForm({ initial = null, noticeId = null }) {
@@ -25,15 +27,15 @@ export default function NoticeForm({ initial = null, noticeId = null }) {
   const [form, setForm] = useState(
     initial
       ? {
-          title: initial.title || "",
-          body: initial.body || "",
-          category: initial.category || "General",
-          priority: initial.priority || "Normal",
-          publishDate: initial.publishDate
-            ? new Date(initial.publishDate).toISOString().split("T")[0]
-            : "",
-          imageUrl: initial.imageUrl || "",
-        }
+        title: initial.title || "",
+        body: initial.body || "",
+        category: initial.category || "General",
+        priority: initial.priority || "Normal",
+        publishDate: initial.publishDate
+          ? new Date(initial.publishDate).toISOString().split("T")[0]
+          : "",
+        imageUrl: initial.imageUrl || "",
+      }
       : EMPTY_FORM
   );
 
@@ -90,10 +92,9 @@ export default function NoticeForm({ initial = null, noticeId = null }) {
   }
 
   const inputClass = (field) =>
-    `w-full rounded-xl border px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 transition-colors ${
-      errors[field]
-        ? "border-red-400 focus:ring-red-200 bg-red-50"
-        : "border-slate-200 focus:ring-green-200 focus:border-green-400 bg-slate-50"
+    `w-full rounded-xl border px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 transition-colors ${errors[field]
+      ? "border-red-400 focus:ring-red-200 bg-red-50"
+      : "border-slate-200 focus:ring-green-200 focus:border-green-400 bg-slate-50"
     }`;
 
   return (
@@ -131,6 +132,7 @@ export default function NoticeForm({ initial = null, noticeId = null }) {
           value={form.body}
           onChange={handleChange}
           rows={5}
+          maxLength={1000}
           placeholder="Write the full notice content here…"
           className={`${inputClass("body")} resize-y`}
         />
@@ -149,9 +151,8 @@ export default function NoticeForm({ initial = null, noticeId = null }) {
                 key={cat}
                 type="button"
                 onClick={() => setField("category", cat)}
-                className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${
-                  isActive ? style.active : style.inactive
-                }`}
+                className={`px-4 py-2 rounded-xl text-sm font-semibold border transition-all ${isActive ? style.active : style.inactive
+                  }`}
               >
                 {cat}
               </button>
@@ -168,22 +169,20 @@ export default function NoticeForm({ initial = null, noticeId = null }) {
           <button
             type="button"
             onClick={() => setField("priority", "Normal")}
-            className={`px-5 py-2 rounded-xl text-sm font-semibold border transition-all ${
-              form.priority === "Normal"
+            className={`px-5 py-2 rounded-xl text-sm font-semibold border transition-all ${form.priority === "Normal"
                 ? "bg-green-600 text-white border-green-600"
                 : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
-            }`}
+              }`}
           >
             ✓ Normal
           </button>
           <button
             type="button"
             onClick={() => setField("priority", "Urgent")}
-            className={`px-5 py-2 rounded-xl text-sm font-semibold border transition-all ${
-              form.priority === "Urgent"
+            className={`px-5 py-2 rounded-xl text-sm font-semibold border transition-all ${form.priority === "Urgent"
                 ? "bg-red-600 text-white border-red-600"
                 : "bg-white text-red-500 border-red-200 hover:border-red-400"
-            }`}
+              }`}
           >
             🔴 Urgent
           </button>
@@ -232,6 +231,22 @@ export default function NoticeForm({ initial = null, noticeId = null }) {
             />
           </div>
         )}
+      </div>
+
+      {/* Location */}
+      <div className="mb-5">
+        <label className="block text-sm font-bold text-slate-700 mb-1.5">
+          Location{" "}
+          <span className="text-xs font-normal text-slate-400 ml-1">optional</span>
+        </label>
+        <input
+          type="text"
+          name="location"
+          value={form.location}
+          onChange={handleChange}
+          placeholder="e.g. Room 101, Main Building"
+          className={inputClass("location")}
+        />
       </div>
 
       {/* Actions */}

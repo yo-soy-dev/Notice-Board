@@ -19,22 +19,26 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "POST") {
-    const { title, body, category, priority, publishDate, imageUrl } = req.body;
+    const { title, body, category, priority, publishDate, imageUrl, location } = req.body;
 
     // Server-side validation
     const errors = {};
 
     if (!title || title.trim() === "") {
       errors.title = "Title is required.";
+    } else if (title.trim().length < 5) {
+      errors.title = "Title must be at least 5 characters.";
     } else if (title.trim().length > 255) {
       errors.title = "Title must be 255 characters or fewer.";
     }
 
     if (!body || body.trim() === "") {
       errors.body = "Body is required.";
+    } else if (body.trim().length > 1000) {
+      errors.body = "Body must be 1000 characters or fewer.";
     }
 
-    if (!category || !["Exam", "Event", "General"].includes(category)) {
+    if (!category || !["Exam", "Event", "General", "Holiday"].includes(category)) {
       errors.category = "Category must be Exam, Event, or General.";
     }
 
@@ -64,6 +68,7 @@ export default async function handler(req, res) {
           priority,
           publishDate: new Date(publishDate),
           imageUrl: imageUrl && imageUrl.trim() !== "" ? imageUrl.trim() : null,
+          location: location && location.trim() !== "" ? location.trim() : null,
         },
       });
       return res.status(201).json(notice);
