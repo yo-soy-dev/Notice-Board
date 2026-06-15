@@ -4,7 +4,7 @@ A full-stack Notice Board built with Next.js (Pages Router), Prisma, and TiDB Cl
 
 ## Live Demo
 
-[YOUR_VERCEL_URL_HERE]
+[Live Demo](https://notice-board-psi.vercel.app)
 
 ## Features
 
@@ -32,7 +32,7 @@ A full-stack Notice Board built with Next.js (Pages Router), Prisma, and TiDB Cl
 
 ### Steps
 
-git clone https://github.com/YOUR_USERNAME/reno-noticeboard.git
+git clone https://github.com/yo-soy-dev/reno-noticeboard.git
 cd reno-noticeboard
 npm install
 cp .env.example .env.local
